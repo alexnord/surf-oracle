@@ -22,4 +22,21 @@ class Location extends Model
         'lng',
         'timezone'
     ];
+
+    /**
+     * Get the tides for the NOAA station.
+     */
+    public function tides()
+    {
+        return $this->hasMany(Tide::class);
+    }
+
+    /**
+     * Get the location that owns the NOAA station.
+     */
+    public function location()
+    {
+        return $this->hasMany(Location::class);
+    }
+    
 }

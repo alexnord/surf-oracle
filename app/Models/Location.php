@@ -26,4 +26,13 @@ class Location extends Model
         'surfline_spot_id',
         'timezone',
     ];
+
+    /**
+     * Get the NOAA station that belongs to the location.
+     */
+    public function noaaStation()
+    {
+        return $this->belongsTo(NOAAStation::class, 'noaa_station_id');
+    }
+    
 }
