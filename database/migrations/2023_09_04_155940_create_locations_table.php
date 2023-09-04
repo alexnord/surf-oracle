@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::create('locations', function (Blueprint $table) {
             $table->increments('id');
+            $table->uuid('uuid');
             $table->boolean('active')->default(1)->index('l_active');
             $table->string('title');
             $table->string('slug');
@@ -24,6 +25,7 @@ return new class extends Migration
             $table->string('surfline_spot_id')->nullable();
             $table->string('timezone')->nullable();
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 
