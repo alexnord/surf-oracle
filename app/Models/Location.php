@@ -6,11 +6,11 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Str;
 
 class Location extends Model
 {
     use HasFactory;
-    use HasUuids;
     use SoftDeletes;
 
     protected $fillable = [
@@ -26,6 +26,15 @@ class Location extends Model
         'surfline_spot_id',
         'timezone',
     ];
+
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::creating(function ($model) {
+            $model->uuid = (string) Str::uuid();
+        });
+    }
 
     /**
      * Get the NOAA station that belongs to the location.
