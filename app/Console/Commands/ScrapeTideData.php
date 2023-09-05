@@ -39,10 +39,7 @@ class ScrapeTideData extends Command
 
             $this->info("\nScraping tide info for {$station->title}.");
 
-            $lastRetrieval = Tide::where('noaa_station_id', $station->id)
-                ->orderBy('timestamp', 'desc')->first();
-
-            $startDate = $lastRetrieval->timestamp ?? now();
+            $startDate = now(); // Always start from the current date
             $endDate = $startDate->copy()->addDays(30);
 
             $this->info("Beginning at: {$startDate}.");
@@ -64,19 +61,18 @@ class ScrapeTideData extends Command
             foreach ($contents->predictions as $content) {
 
                 $timestamp = Carbon::parse($content->t);
-
-                // Skip duplicates
-                if (Tide::where('timestamp', $timestamp)->where('noaa_station_id', $station->id)->exists()) {
-                    continue;
-                }
-
+            
                 try {
-                    Tide::updateOrCreate([
-                        'timestamp' => $timestamp,
-                        'type' => $content->type,
-                        'height' => $content->v,
-                        'noaa_station_id' => $station->id,
-                    ]);
+                    Tide::updateOrCreate(
+                        [
+                            'timestamp' => $timestamp,
+                            'noaa_station_id' => $station->id,
+                        ],
+                        [
+                            'type' => $content->type,
+                            'height' => $content->v,
+                        ]
+                    );
                 } catch(\Exception $e) {
                     $this->error($e->getMessage());
                     continue;
