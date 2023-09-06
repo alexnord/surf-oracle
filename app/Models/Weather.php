@@ -7,23 +7,21 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Str;
 
-class Location extends Model
+class Weather extends Model
 {
     use HasFactory;
     use SoftDeletes;
 
     protected $fillable = [
         'uuid',
-        'active',
-        'title',
-        'slug',
-        'image',
-        'lat',
-        'lng',
-        'noaa_station_id',
-        'buoy_id',
-        'surfline_spot_id',
-        'timezone',
+        'timestamp',
+        'location_id',
+        'text',
+        'icon',
+        'temperature',
+        'angle',
+        'speed',
+        'direction',
     ];
 
     protected static function boot()
@@ -38,8 +36,8 @@ class Location extends Model
     /**
      * Get the NOAA station that belongs to the location.
      */
-    public function noaaStation()
+    public function location()
     {
-        return $this->belongsTo(NOAAStation::class, 'noaa_station_id');
+        return $this->hasOne(Location::class, 'location_id');
     }
 }

@@ -8,7 +8,7 @@ use App\Models\NoaaStation;
 use App\Models\Tide;
 use GuzzleHttp\Client;
 
-class ScrapeTideData extends Command
+class GetTides extends Command
 {
     /**
      * The name and signature of the console command.
