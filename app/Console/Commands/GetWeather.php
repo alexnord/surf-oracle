@@ -91,8 +91,8 @@ class GetWeather extends Command
             $data = [
                 // 'timezone_offset' => Carbon::parse($hour['date'])->offsetHours, // To store the offset
                 // 'timestamp' => now()->setTimestamp(strtotime($hour['date'])),
-                'timestamp' => Carbon::parse($hour['date'])->setTimezone('UTC'), // To store in UTC
-                `timezone` => 'UTC',
+                'timestamp' =>  \Carbon\Carbon::parse($hour['date'])->setTimezone('UTC'), // To store in UTC
+                // `timezone` => 'UTC',
                 'location_id' => $location->id,
                 'text' => $hour['iconPhrase'],
                 'icon' => $hour['iconCode'],

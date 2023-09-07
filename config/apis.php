@@ -10,6 +10,6 @@ return [
         ]
     ],
     'surfline' => [
-        'swell' => '',
+        'swell' => 'https://services.surfline.com/kbyg/spots/forecasts/wave',
     ],
 ];

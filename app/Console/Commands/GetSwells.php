@@ -61,7 +61,7 @@ class GetSwells extends Command
      * @return mixed
      */
     private function getSurflineSwells(Location $location) {
-        $baseUrl = "https://services.surfline.com/kbyg/spots/forecasts/wave";
+        $baseUrl = config('apis.surfline.swell');
 
         // Construct the URI for the API request
         $uri = "{$baseUrl}?spotId={$location->surfline_spot_id}&days=16&intervalHours=1&cacheEnabled=true&units%5BswellHeight%5D=FT&units%5BwaveHeight%5D=FT&accesstoken=610e362a5140a0976b09e0c9841de34d32629dd9";
@@ -82,15 +82,17 @@ class GetSwells extends Command
         foreach ($contents['data']['wave'] as $wave) {
             // Extract the necessary data
             $data = [
-                'timestamp' => \Carbon\Carbon::createFromTimestamp($wave['timestamp']),
+                'timestamp' => \Carbon\Carbon::createFromTimestamp($wave['timestamp'])->setTimezone('UTC'),
                 'surfline_surf_height_min' => $wave['surf']['min'],
                 'surfline_surf_height_max' => $wave['surf']['max'],
                 'surfline_score' => $wave['surf']['optimalScore'],
                 'surfline_human_relation' => $wave['surf']['humanRelation'],
                 'location_id' => $location->id,
+                'surfline_spot_id' => $location->surfline_spot_id,
             ];
 
             // Loop through each swell
+            // We only care about swells 1, 2, and 3
             for ($i = 1; $i < 4; $i++) {
                 if (isset($wave['swells'][$i])) {
                     $swell = $wave['swells'][$i];
@@ -108,9 +110,8 @@ class GetSwells extends Command
             // Update or create a new Swell entry with the data
             Swell::updateOrCreate(
                 [
-                    'timestamp' => \Carbon\Carbon::createFromTimestamp($data['timestamp']),
+                    'timestamp' => $data['timestamp'],
                     'location_id' => $location->id,
-                    'surfline_spot_id' => $location->surfline_spot_id,
                 ],
                 $data
             );

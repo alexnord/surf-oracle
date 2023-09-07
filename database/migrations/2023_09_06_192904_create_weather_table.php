@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('weather', function (Blueprint $table) {
             $table->id();
             $table->uuid('uuid');
-            $table->dateTime('timestamp')->nullable();
+            $table->dateTime('timestamp');
             $table->string('timezone')->default('UTC');
             $table->integer('location_id')->unsigned()->index('w_location_id');
             $table->foreign('location_id')->references('id')->on('locations');
