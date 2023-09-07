@@ -15,6 +15,7 @@ return new class extends Migration
             $table->increments('id');
             $table->uuid('uuid');
             $table->dateTime('timestamp')->nullable();
+            $table->string('timezone')->default('UTC');
             $table->string('type');
             $table->float('height', 4, 2);
             $table->integer('noaa_station_id')->unsigned()->nullable();

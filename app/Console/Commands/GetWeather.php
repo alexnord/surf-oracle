@@ -89,9 +89,10 @@ class GetWeather extends Command
         foreach ($contents['forecasts'] as $hour) {
             // Extract the necessary data
             $data = [
-                // 'timestamp' => Carbon::parse($hour['date'])->setTimezone('UTC'), // To store in UTC
                 // 'timezone_offset' => Carbon::parse($hour['date'])->offsetHours, // To store the offset
-                'timestamp' => now()->setTimestamp(strtotime($hour['date'])),
+                // 'timestamp' => now()->setTimestamp(strtotime($hour['date'])),
+                'timestamp' => Carbon::parse($hour['date'])->setTimezone('UTC'), // To store in UTC
+                `timezone` => 'UTC',
                 'location_id' => $location->id,
                 'text' => $hour['iconPhrase'],
                 'icon' => $hour['iconCode'],

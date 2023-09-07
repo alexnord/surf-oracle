@@ -71,6 +71,7 @@ class GetTides extends Command
                         [
                             'type' => $content->type,
                             'height' => $content->v,
+                            'timezone' => 'UTC',
                         ]
                     );
                 } catch(\Exception $e) {

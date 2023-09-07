@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->uuid('uuid');
             $table->dateTime('timestamp')->nullable();
+            $table->string('timezone')->default('UTC');
             $table->integer('location_id')->unsigned()->index('w_location_id');
             $table->foreign('location_id')->references('id')->on('locations');
             $table->string('text');
