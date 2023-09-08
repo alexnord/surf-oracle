@@ -17,9 +17,7 @@ class ForecastController extends Controller
 {
     public function show($slug)
     {
-        $location = Location::with(['swells', 'weather', 'tides'])
-            ->where('slug', $slug)
-            ->firstOrFail();
+        $location = Location::where('slug', $slug)->firstOrFail();
 
         // Get the UTC start and end times for 7 days
         list($utcStart, $utcEnd) = $this->getUtcTimes($location->timezone, 7);
@@ -40,13 +38,14 @@ class ForecastController extends Controller
             // Get the swell, weather, and tide data and group them by hour block
             $dayData = [];
             for ($time = $dayStart; $time < $dayEnd; $time->addHour()) {
-                $swells = $location->swells
+                $swells = Swell::where('location_id', $location->id)
                     ->whereBetween('timestamp', [$time, $time->copy()->addHour()])
-                    ->sortBy('timestamp');
+                    ->orderBy('timestamp', 'asc')
+                    ->get();
 
-                $weather = $location->weather
+                $weather = Weather::where('location_id', $location->id)
                     ->whereBetween('timestamp', [$time, $time->copy()->addHour()])
-                    ->sortBy('timestamp')
+                    ->orderBy('timestamp', 'asc')
                     ->first();
 
                 // Calculate tide height and if it's rising or falling

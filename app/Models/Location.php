@@ -43,16 +43,25 @@ class Location extends Model
         return $this->belongsTo(NOAAStation::class, 'noaa_station_id');
     }
 
+    /**
+     * Get the swells that belong to the location.
+     */
     public function swells()
     {
         return $this->hasMany(Swell::class);
     }
 
+    /**
+     * Get the weather that belongs to the location.
+     */
     public function weather()
     {
         return $this->hasMany(Weather::class);
     }
 
+    /**
+     * Get the tides that belong to the location.
+     */
     public function tides()
     {
         return $this->hasMany(Tide::class, 'noaa_station_id', 'noaa_station_id');
