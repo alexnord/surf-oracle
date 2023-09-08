@@ -14,14 +14,14 @@ class GetSwells extends Command
      *
      * @var string
      */
-    protected $signature = 'data:swells';
+    protected $signature = 'data:swells {slug?}';
 
     /**
      * The console command description.
      *
      * @var string
      */
-    protected $description = 'Get swell data from Surfline API.';
+    protected $description = 'Get swell data from Surfline API. Optionally provide a location slug to get data for a specific location.';
 
     /**
      * Execute the console command.
@@ -30,8 +30,10 @@ class GetSwells extends Command
      */
     public function handle()
     {
-        // Get all active locations
-        $locations = Location::where('active', true)->get();
+        $slug = $this->argument('slug');
+
+        // Get all active locations or a specific location if a slug is provided
+        $locations = $slug ? Location::where('slug', $slug)->get() : Location::where('active', true)->get();
 
         $bar = $this->output->createProgressBar(count($locations));
 
@@ -118,3 +120,4 @@ class GetSwells extends Command
         }
     }
 }
+

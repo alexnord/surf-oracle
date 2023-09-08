@@ -42,4 +42,19 @@ class Location extends Model
     {
         return $this->belongsTo(NOAAStation::class, 'noaa_station_id');
     }
+
+    public function swells()
+    {
+        return $this->hasMany(Swell::class);
+    }
+
+    public function weather()
+    {
+        return $this->hasMany(Weather::class);
+    }
+
+    public function tides()
+    {
+        return $this->hasMany(Tide::class, 'noaa_station_id', 'noaa_station_id');
+    }
 }

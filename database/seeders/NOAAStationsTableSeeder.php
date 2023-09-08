@@ -21,6 +21,8 @@ class NOAAStationsTableSeeder extends Seeder
                 'lat' => '33.9083330',
                 'lng' => '-118.4333330',
                 'timezone' => 'America/Los_Angeles',
+                'created_at' => now(),
+                'updated_at' => now(),
             ],
             [
                 'uuid' => (string) \Illuminate\Support\Str::uuid(),
@@ -30,6 +32,8 @@ class NOAAStationsTableSeeder extends Seeder
                 'lat' => '34.0083330',
                 'lng' => '-118.5000000',
                 'timezone' => 'America/Los_Angeles',
+                'created_at' => now(),
+                'updated_at' => now(),
             ],
             [
                 'uuid' => (string) \Illuminate\Support\Str::uuid(),
@@ -39,6 +43,8 @@ class NOAAStationsTableSeeder extends Seeder
                 'lat' => '34.2666670',
                 'lng' => '-119.2833330',
                 'timezone' => 'America/Los_Angeles',
+                'created_at' => now(),
+                'updated_at' => now(),
             ],
             [
                 'uuid' => (string) \Illuminate\Support\Str::uuid(),
@@ -48,6 +54,8 @@ class NOAAStationsTableSeeder extends Seeder
                 'lat' => '34.3483330',
                 'lng' => '-119.4433330',
                 'timezone' => 'America/Los_Angeles',
+                'created_at' => now(),
+                'updated_at' => now(),
             ],
         ]);
     }

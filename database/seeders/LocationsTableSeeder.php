@@ -23,6 +23,8 @@ class LocationsTableSeeder extends Seeder
                 'noaa_station_id' => \DB::table('noaa_stations')->where('title', 'Santa Monica Pier')->first()->id,
                 'surfline_spot_id' => '5842041f4e65fad6a7708936',
                 'timezone' => 'America/Los_Angeles',
+                'created_at' => now(),
+                'updated_at' => now(),
             ],
             [
                 'uuid' => (string) \Illuminate\Support\Str::uuid(),
@@ -34,6 +36,8 @@ class LocationsTableSeeder extends Seeder
                 'noaa_station_id' => \DB::table('noaa_stations')->where('title', 'Ventura')->first()->id,
                 'surfline_spot_id' => '584204204e65fad6a77096b1',
                 'timezone' => 'America/Los_Angeles',
+                'created_at' => now(),
+                'updated_at' => now(),
             ],
         ]);
     }
