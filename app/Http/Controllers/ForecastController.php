@@ -38,10 +38,11 @@ class ForecastController extends Controller
             // Get the swell, weather, and tide data and group them by hour block
             $dayData = [];
             for ($time = $dayStart; $time < $dayEnd; $time->addHour()) {
+
                 $swells = Swell::where('location_id', $location->id)
                     ->whereBetween('timestamp', [$time, $time->copy()->addHour()])
                     ->orderBy('timestamp', 'asc')
-                    ->get();
+                    ->first();
 
                 $weather = Weather::where('location_id', $location->id)
                     ->whereBetween('timestamp', [$time, $time->copy()->addHour()])
@@ -52,13 +53,13 @@ class ForecastController extends Controller
                 list($tideHeight, $tideChange) = $this->calculateTide($tides, $time);
 
                 $dayData[] = [
-                    'timestamp' => $time->copy()->setTimezone('UTC')->toDateTimeString(),
+                    'timestamp_utc' => $time->copy()->setTimezone('UTC')->toDateTimeString(),
                     'local_time' => $time->copy()->setTimezone($location->timezone)->toDateTimeString(),
-                    'swells' => $swells ? SwellResource::collection($swells) : null,
-                    'weather' => $weather ? new WeatherResource($weather) : null,
-                    'tides' => $tides ? TideResource::collection($tides) : null,
                     'tide_height' => $tideHeight,
                     'tide_change' => $tideChange,
+                    'swells' => $swells ? new SwellResource($swells) : null,
+                    'weather' => $weather ? new WeatherResource($weather) : null,
+                    'tides' => $tides ? TideResource::collection($tides) : null,
                 ];
             }
 
@@ -178,4 +179,3 @@ class ForecastController extends Controller
         return [$tideHeight, $tideChange];
     }
 }
-

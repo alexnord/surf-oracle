@@ -2,7 +2,6 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\ForecastController;
 
 /*
 |--------------------------------------------------------------------------
@@ -20,4 +19,13 @@ Route::middleware(['auth:sanctum'])->get('/user', function (Request $request) {
 });
 
 // Get location forecast by slug
-Route::get('/location/{slug}', [ForecastController::class, 'show']);
+Route::get('/location/{slug}', [
+    \App\Http\Controllers\ForecastController::class,
+    'show'
+]);
+
+// Get conditions
+Route::get('/report/conditions', [
+    \App\Http\Controllers\ReportController::class,
+    'getConditions'
+]);

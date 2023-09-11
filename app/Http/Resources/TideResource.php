@@ -16,8 +16,7 @@ class TideResource extends JsonResource
     {
         return [
             'uuid' => $this->uuid,
-            'timestamp' => $this->timestamp,
-            'timezone' => $this->timezone,
+            'timestamp_utc' => $this->timestamp,
             'type' => $this->type,
             'height' => $this->height,
         ];
